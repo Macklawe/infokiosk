@@ -1,0 +1,38 @@
+export const TOGGLE_MENU = "TOGGLE_MENU";
+
+export const TOGGLE_DELETE = "TOGGLE_DELETE";
+export const SELECT_ROW = "SELECT_ROW";
+export const CLEAR_ROW = "CLEAR_ROW";
+export const TOGGLE_ADD = "TOGGLE_ADD";
+export const TOGGLE_EDIT = "TOGGLE_EDIT";
+export const GET_CATEGORIES = "GET_CATEGORIES";
+export const ADD_CATEGORIES = "ADD_CATEGORIES";
+export const EDIT_CATEGORIES = "EDIT_CATEGORIES";
+export const DELETE_CATEGORIES = "DELETE_CATEGORIES";
+
+export const TOGGLE_DELETE_POST = "TOGGLE_DELETE_POST";
+export const SELECT_ROW_POST = "SELECT_ROW_POST";
+export const CLEAR_ROW_POST = "CLEAR_ROW_POST";
+export const TOGGLE_ADD_POST = "TOGGLE_ADD_POST";
+export const TOGGLE_EDIT_POST = "TOGGLE_EDIT_POST";
+export const TOGGLE_MAP = "TOGGLE_MAP";
+export const GET_POSTS = "GET_POSTS";
+export const DELETE_POST = "DELETE_POST";
+export const GET_INFO_POST = "GET_INFO_POST";
+export const ADD_POST = "ADD_POST";
+export const TOGGLE_IMAGE_DESC = "TOGGLE_IMAGE_DESC";
+export const EDIT_POST = "EDIT_POST";
+
+export const ADD_DEVICE = "ADD_DEVICE";
+export const EDIT_DEVICE = "EDIT_DEVICE";
+export const DELETE_DEVICE = "DELETE_DEVICE";
+export const TOGGLE_ADD_DEVICES = "TOGGLE_ADD_DEVICES";
+export const TOGGLE_DELETE_DEVICES = "TOGGLE_DELETE_DEVICES";
+export const TOGGLE_EDIT_DEVICES = "TOGGLE_EDIT_DEVICES";
+export const GET_DEVICES = "GET_DEVICES";
+export const CLEAR_ROW_DEVICES = "CLEAR_ROW_DEVICES";
+export const SELECT_ROW_DEVICES = "SELECT_ROW_DEVICES";
+
+export const LOGIN = "LOGIN";
+export const NOTIFICATION = "NOTIFICATION";
+export const GET_BLOCKS = "GET_BLOCKS";
