@@ -21,7 +21,7 @@ interface Props extends WithStyles<typeof styles> {
 
 const PostItem: React.StatelessComponent<Props> = (props: Props) => {
   const { classes, postItem } = props;
-  console.log(postItem);
+  console.log(postItem, '123');
 
   return (
     <div className={classes.root}>
