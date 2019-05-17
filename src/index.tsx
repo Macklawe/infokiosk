@@ -1,11 +1,10 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import App from "./components/app";
-import { Provider } from "mobx-react";
-
-import { Router } from "react-router";
-import createBrowserHistory from "history/createBrowserHistory";
-import { store } from "./store";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import App from './components/app';
+import { Provider } from 'mobx-react';
+import { Router } from 'react-router';
+import createBrowserHistory from 'history/createBrowserHistory';
+import { store } from './store';
 
 const history = createBrowserHistory();
 
@@ -15,5 +14,5 @@ ReactDOM.render(
       <App />
     </Router>
   </Provider>,
-  document.querySelector("#root")
+  document.querySelector('#root')
 );

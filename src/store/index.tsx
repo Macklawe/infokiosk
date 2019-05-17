@@ -1,43 +1,34 @@
-import { types } from "mobx-state-tree";
-import { eventLog } from "./models/eventLog";
+import { types } from 'mobx-state-tree';
 
-const Store = types.model("Store", {
-  eventLog: types.optional(eventLog, {})
-});
+import { CategoryItem, ICategoryItem } from './models/category/item';
+import { PostItem, IPostItem } from './models/posts/item';
 
-const newDate = new Date();
-const localTime =
-  newDate.getFullYear() +
-  "-" +
-  (newDate.getMonth() + 1) +
-  "-" +
-  newDate.getDate() +
-  " " +
-  newDate.getHours() +
-  ":" +
-  newDate.getMinutes() +
-  ":" +
-  newDate.getSeconds();
-
-const hour = new Date(newDate.getTime() - 1000 * 60 * 60);
-const lastHour =
-  hour.getFullYear() +
-  "-" +
-  (hour.getMonth() + 1) +
-  "-" +
-  hour.getDate() +
-  " " +
-  hour.getHours() +
-  ":" +
-  hour.getMinutes() +
-  ":" +
-  hour.getSeconds();
+const Store = types
+  .model('Store', {
+    category: types.array(CategoryItem),
+    posts: types.array(PostItem),
+    ping: types.optional(types.boolean, false)
+  })
+  .actions(self => ({
+    setPing: (ping: boolean) => {
+      self.ping = ping;
+    },
+    setCategories(categories: Array<ICategoryItem>) {
+      self.category.push(...categories);
+    },
+    setPosts(posts: Array<IPostItem>) {
+      self.posts.push(...posts);
+    },
+    clearPosts: () => {
+      let newArray: any = [];
+      self.posts = newArray;
+    }
+  }));
 
 export type IStore = typeof Store.Type;
 
 export const store = Store.create({
-  eventLog: {
-    localTime: localTime,
-    lastHour: lastHour
-  }
+  category: [],
+  posts: [],
+  ping: false
 }) as IStore;

@@ -1,43 +1,32 @@
-import * as React from "react";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
+import * as React from 'react';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import createStyles from '@material-ui/core/styles/createStyles';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 // import { observer, inject } from "mobx-react";
 // import { IStore } from 'src/newStore/store';
 // import { ITodo } from "../newStore/models/todo";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {},
-    buttonContainer: {
-      padding: theme.spacing.unit
-    },
-    active: {
-      backgroundColor: "#31343A"
+    header: {
+      padding: theme.spacing.unit * 3,
+      background: 'rgba(24, 26, 32, 0.2)'
     }
   });
 
-interface Props extends WithStyles<typeof styles> {
-  // setTab: (i: number) => void;
-  // currentTab: number;
-  // todo?: ITodo;
-}
+interface Props extends WithStyles<typeof styles> {}
 
-// @inject((store: any, nextProps: any) => ({
-//   todo: store.todo,
-//   props: nextProps
-// }))
-// @observer
 class Buttons extends React.Component<Props> {
   render() {
     const { classes } = this.props;
-    // const buttonArr = ['Event Log', 'Persons', 'Cameras'];
     return (
-      <div className={classes.buttonContainer}>
-        <Link to="/">Event</Link>
-        <Link to="/Cameras">Camera</Link>
-        <Link to="/Persons">Camera</Link>
+      <div className={classes.header}>
+        <Typography align="center" variant="h2">
+          Военная книга
+        </Typography>
       </div>
     );
   }

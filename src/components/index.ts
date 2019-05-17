@@ -1,7 +1,6 @@
-import Cameras from "./cameras";
-import Header from "./header";
-import Persons from "./persons";
-import EventLog from "./eventLog";
-import { serverUrl } from "../serverUri";
+import Header from './header';
+import MainScreen from './MainScreen';
+import Connection from './Connection';
+import { serverUrl } from '../serverUri';
 
-export { Cameras, Header, Persons, serverUrl, EventLog };
+export { Header, serverUrl, MainScreen, Connection };

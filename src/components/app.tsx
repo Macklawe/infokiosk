@@ -1,16 +1,17 @@
-import * as React from "react";
-import { Theme } from "@material-ui/core/styles/createMuiTheme";
-import createStyles from "@material-ui/core/styles/createStyles";
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
-import withRoot from "../withRoot";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { withRouter } from "react-router";
-import { Divider } from "@material-ui/core";
-import { inject, observer } from "mobx-react";
+import * as React from 'react';
+import { Theme } from '@material-ui/core/styles/createMuiTheme';
+import createStyles from '@material-ui/core/styles/createStyles';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import withRoot from '../withRoot';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { withRouter } from 'react-router';
+import { Divider } from '@material-ui/core';
+import { inject, observer } from 'mobx-react';
 
-import PrivateRouter from "./privateRouter";
-import { Header, EventLog, Cameras, Persons, serverUrl } from "./index";
-import { IStore } from "../store";
+import PrivateRouter from './privateRouter';
+import { Header, MainScreen, serverUrl, Connection } from './index';
+import { IStore } from '../store';
+import Posts from './MainScreen/Posts';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -23,34 +24,38 @@ interface Props extends WithStyles<typeof styles> {
 
 class App extends React.Component<Props> {
   componentDidMount() {
-    fetch(
-      `${serverUrl}/api/get_events_in_interval?begin=${
-        this.props.store.eventLog.lastHour
-      }&end=${this.props.store.eventLog.localTime}`
-    )
-      .then(res => res.json())
-      .then(
-        data =>
-          this.props.store.eventLog &&
-          this.props.store.eventLog.setData(data.data)
-      )
-      .catch(error => console.log(error));
+    fetch(`${serverUrl}/ping`)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        this.props.store.setPing(data.connectionServer);
+      });
+
+    fetch(`${serverUrl}/ip/categories/active`)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => this.props.store.setCategories(data));
   }
 
   render() {
-    console.log(this.props);
+    const { store } = this.props;
+
     return (
       <>
         <Route component={Header} />
-        <Divider />
-        <PrivateRouter exact path="/" component={EventLog} />
-        <PrivateRouter exact path="/Cameras" component={Cameras} />
-        <PrivateRouter exact path="/Persons" component={Persons} />
+        {!store.ping ? (
+          <PrivateRouter path="/" component={Connection} />
+        ) : (
+          <>
+            <PrivateRouter exact path="/" component={MainScreen} />
+            <PrivateRouter path="/category/:id" component={Posts} />
+          </>
+        )}
       </>
     );
   }
 }
 
-export default withRouter(
-  inject("store")(withRoot(withStyles(styles)(observer(App as any))))
-);
+export default withRouter(inject('store')(withRoot(withStyles(styles)(observer(App as any)))));

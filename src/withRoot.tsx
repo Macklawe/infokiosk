@@ -1,16 +1,16 @@
-import * as React from "react";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import withStyles, { WithStyles } from "@material-ui/core/styles/withStyles";
+import * as React from 'react';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 
-import * as variableColor from "./style/style";
+import * as variableColor from './style/style';
 // A theme with custom primary and secondary color.
 // It's optional.
 const theme = createMuiTheme({
   typography: {
-    // Tell Material-UI what's the font-size on the html element is.
+    useNextVariants: true,
     htmlFontSize: 13,
-    fontFamily: '"Open Sans", sans-serif'
+    fontFamily: '"Roboto", sans-serif'
   },
   palette: {
     primary: {
@@ -26,7 +26,7 @@ const theme = createMuiTheme({
         minWidth: 400,
         borderRadius: 0,
         backgroundColor: variableColor.bodyBackground,
-        border: "1px solid " + variableColor.borderColor
+        border: '1px solid ' + variableColor.borderColor
       }
     },
     MuiDialogTitle: {
@@ -44,12 +44,17 @@ const theme = createMuiTheme({
         color: variableColor.text,
         fontSize: 12,
         fontWeight: 100,
-        lineHeight: "16px"
+        lineHeight: '16px'
       },
       colorTextSecondary: {
-        color: "#dddddd",
+        color: '#dddddd',
         fontSize: 12,
         fontWeight: 300
+      },
+      h2: {
+        fontSize: 36,
+        fontWeight: 400,
+        color: variableColor.white
       }
     },
     MuiDialogContent: {
@@ -62,58 +67,54 @@ const theme = createMuiTheme({
         color: variableColor.text,
         fontSize: 12,
         fontWeight: 100,
-        lineHeight: "16px"
+        lineHeight: '16px'
       }
     },
     MuiDialogActions: {
       root: {
-        margin: "0px 8px 16px"
+        margin: '0px 8px 16px'
       },
       action: {
-        margin: "0 8px"
+        margin: '0 8px'
       }
     },
     MuiTouchRipple: {
       child: {
-        backgroundColor: "#000",
+        backgroundColor: '#000',
         opacity: 0.9
       }
     },
     MuiButton: {
       root: {
-        textTransform: "capitalize",
-        marginRight: "10px"
+        textTransform: 'capitalize',
+        marginRight: '10px'
       },
       contained: {
         fontSize: 12,
         fontWeight: 300,
-        padding: "14px 20px",
-        "box-shadow": "none",
+        padding: '14px 20px',
+        'box-shadow': 'none',
         borderRadius: 3,
-        "&:active": {
-          boxShadow: "none"
+        '&:active': {
+          boxShadow: 'none'
         }
       },
       containedPrimary: {
         color: variableColor.text,
-        "&:hover": {
-          backgroundColor: "#31343A"
+        '&:hover': {
+          backgroundColor: '#31343A'
         }
       },
       containedSecondary: {
         color: variableColor.text,
-        "&:hover": {
-          backgroundColor: "#31343A"
+        '&:hover': {
+          backgroundColor: '#31343A'
         }
       },
       label: {
-        position: "relative",
+        position: 'relative',
         zIndex: 2,
         lineHeight: 1
-      },
-      disabled: {
-        backgroundColor: "transparent",
-        color: "#83868D !important"
       }
     },
     MuiInput: {
@@ -124,20 +125,20 @@ const theme = createMuiTheme({
         // maxWidth: '400px',
         fontSize: 13,
         color: variableColor.text,
-        "&:before, &:after": {
-          display: "none"
+        '&:before, &:after': {
+          display: 'none'
         }
       },
       input: {
         font: "300 13px 'Open Sans', sans-serif",
         backgroundColor: variableColor.bodyBackground,
-        height: "auto",
-        padding: "12.5px 16px",
+        height: 'auto',
+        padding: '12.5px 16px',
         lineHeight: 1,
         borderRadius: 3,
-        border: "2px solid " + variableColor.text,
-        "&::placeholder": {
-          color: "#83868D",
+        border: '2px solid ' + variableColor.text,
+        '&::placeholder': {
+          color: '#83868D',
           opacity: 1
         }
       },
@@ -149,7 +150,7 @@ const theme = createMuiTheme({
     MuiDrawer: {
       paper: {
         backgroundColor: variableColor.bodyBackground,
-        height: "100%"
+        height: '100%'
       },
       // docked: {
       //   minHeight: '100vh',
@@ -164,18 +165,18 @@ const theme = createMuiTheme({
     },
     MuiTableRow: {
       root: {
-        backgroundColor: "#35383F",
-        borderBottom: "1px solid " + variableColor.borderColor,
+        backgroundColor: '#35383F',
+        borderBottom: '1px solid ' + variableColor.borderColor,
         height: 24
       },
       head: {
-        height: "40px",
+        height: '40px',
         backgroundColor: variableColor.bodyBackground
       }
     },
     MuiTableCell: {
       root: {
-        borderBottomColor: "#DEDEDE"
+        borderBottomColor: '#DEDEDE'
       },
       head: {
         color: variableColor.text,
@@ -195,7 +196,7 @@ const theme = createMuiTheme({
         marginRight: 20
       },
       input: {
-        display: "none"
+        display: 'none'
       }
     },
     MuiFormLabel: {
@@ -206,15 +207,15 @@ const theme = createMuiTheme({
     },
     MuiFormControl: {
       root: {
-        margin: "0px 20px",
-        width: "90%"
+        margin: '0px 20px',
+        width: '90%'
       }
     },
     MuiFormHelperText: {
       root: {
         fontSize: 12,
         fontWeight: 400,
-        margin: "0 0 10px",
+        margin: '0 0 10px',
         marginTop: 0
       },
       error: {
@@ -245,49 +246,49 @@ const theme = createMuiTheme({
     },
     MuiExpansionPanel: {
       root: {
-        boxShadow: "none",
-        backgroundColor: "transparent",
-        "&:before": {
-          display: "none"
+        boxShadow: 'none',
+        backgroundColor: 'transparent',
+        '&:before': {
+          display: 'none'
         }
       },
       expanded: {
         margin: 0,
-        "&:first-child": {
+        '&:first-child': {
           marginTop: 0
         }
       }
     },
     MuiExpansionPanelSummary: {
       root: {
-        minHeight: "0px !important",
+        minHeight: '0px !important',
         padding: 0,
-        "&$focused": {
-          backgroundColor: "transparet"
+        '&$focused': {
+          backgroundColor: 'transparet'
         }
       },
       expandIcon: {
         right: 0,
         left: -16,
         zIndex: 2,
-        margin: "0px !important",
-        "&$expanded": {
-          transform: "translateY(-50%) rotate(90deg)"
+        margin: '0px !important',
+        '&$expanded': {
+          transform: 'translateY(-50%) rotate(90deg)'
         }
       },
       content: {
-        margin: "0px !important",
+        margin: '0px !important',
         zIndex: 2
       }
     },
     MuiCollapse: {
       entered: {
-        overflow: "inherit"
+        overflow: 'inherit'
       }
     },
     MuiExpansionPanelDetails: {
       root: {
-        color: "transparent",
+        color: 'transparent',
         padding: 0
       }
     },
@@ -298,14 +299,14 @@ const theme = createMuiTheme({
     },
     MuiSnackbarContent: {
       root: {
-        "@media (min-width: 960px)": {
+        '@media (min-width: 960px)': {
           borderRadius: 0
         }
       }
     },
     MuiToolbar: {
       gutters: {
-        "@media (min-width: 960px)": {
+        '@media (min-width: 960px)': {
           paddingLeft: 5,
           paddingRight: 5
         }
@@ -313,30 +314,30 @@ const theme = createMuiTheme({
     },
     MuiSelect: {
       root: {
-        border: "2px solid " + variableColor.text,
+        border: '2px solid ' + variableColor.text,
         borderRadius: 3
       },
       select: {
         // borderRadius: 3,
         border: 0,
-        backgroundColor: "transparent",
-        "&:focus": {
+        backgroundColor: 'transparent',
+        '&:focus': {
           borderRadius: 3
         }
       },
       selectMenu: {
-        height: "auto",
-        padding: "11.5px 32px 11.5px 16px"
+        height: 'auto',
+        padding: '11.5px 32px 11.5px 16px'
       },
       icon: {
-        color: "#fff"
+        color: '#fff'
       }
     },
     MuiMenu: {
       paper: {
         backgroundColor: variableColor.bodyBackground,
-        border: "2px solid " + variableColor.text,
-        borderRadius: "0 0 3px 3px",
+        border: '2px solid ' + variableColor.text,
+        borderRadius: '0 0 3px 3px',
         marginTop: -2
       }
     },
@@ -344,15 +345,15 @@ const theme = createMuiTheme({
       root: {
         // minWidth: 123,
         fontSize: 12,
-        lineHeight: "16px",
+        lineHeight: '16px',
         paddingTop: 3,
         paddingBottom: 3,
-        height: "auto",
+        height: 'auto',
         color: variableColor.text,
         paddingLeft: 24.5,
         paddingRight: 24.5,
-        boxSizing: "border-box",
-        "&$selected": {
+        boxSizing: 'border-box',
+        '&$selected': {
           backgroundColor: variableColor.primary
         }
       }
@@ -361,29 +362,45 @@ const theme = createMuiTheme({
 });
 
 const decorate = withStyles({
-  "@global": {
+  '@global': {
     body: {
-      backgroundColor: variableColor.bodyBackground,
+      background: 'linear-gradient(45deg, #181A20, #585D68);',
+      minHeight: '100vh',
       fontSize: 12,
       fontFamily: '"Open Sans", sans-serif',
       fontWeight: 400,
-      color: variableColor.text
+      color: variableColor.text,
+
+      '&::-webkit-scrollbar': {
+        width: '15px'
+      },
+
+      '&::-webkit-scrollbar-track': {
+        background: 'rgba(172,182,204,0.2)'
+      },
+
+      '&::-webkit-scrollbar-thumb': {
+        background: '#DCBE98'
+      }
     },
     main: {
-      minHeight: "100vh"
+      minHeight: '100vh'
+    },
+    a: {
+      textDecoration: 'none'
     },
     p: {
       marginTop: 0
     },
-    "[data-loading=true]": {
-      "overflow-y": "hidden !important",
-      "&:after": {
+    '[data-loading=true]': {
+      'overflow-y': 'hidden !important',
+      '&:after': {
         content: '""',
-        display: "block",
+        display: 'block',
         zIndex: 3,
-        width: "100%",
-        height: "calc(100% - 32px)",
-        position: "absolute",
+        width: '100%',
+        height: 'calc(100% - 32px)',
+        position: 'absolute',
         top: 0,
         left: 0,
         backgroundSize: 40,
