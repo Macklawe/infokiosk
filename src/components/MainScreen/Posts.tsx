@@ -10,7 +10,6 @@ import { serverUrl } from '..';
 import { Link } from 'react-router-dom';
 import { IPostItem } from '../../store/models/posts/item';
 import PostItem from './PostItem';
-import { render } from 'react-dom';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -21,25 +20,31 @@ const styles = (theme: Theme) =>
       gridAutoColumns: '1fr',
       gridAutoRows: 'minmax(calc(50vh - 94px), 1fr)',
       gridColumnGap: '16px',
-      gridRowGap: '16px'
+      gridRowGap: '16px',
+      gridTemplateColumns: '1fr 1fr 1fr'
     }
   });
 
 interface Props extends WithStyles<typeof styles> {
   store: IStore;
   match: any;
+  location: any;
 }
 
 class Posts extends React.Component<Props> {
   constructor(props: any) {
     super(props);
 
-    const catID = this.props.match.params.id;
+    const catID = this.props.match.params.catid;
     fetch(`${serverUrl}/ip/categories/${catID}/records`)
       .then(res => {
         return res.json();
       })
-      .then(posts => store.setPosts(posts));
+      .then(posts => store.setPosts(posts))
+      .catch(error => {
+        console.log(error);
+        this.props.store.openNotification();
+      });
   }
 
   componentWillUnmount() {
@@ -47,11 +52,14 @@ class Posts extends React.Component<Props> {
   }
 
   render() {
-    const { classes, store } = this.props;
+    const { classes, store, location } = this.props;
+
     return (
       <div className={classes.root}>
         {store.posts && store.posts.length !== 0
-          ? store.posts.map((postItem: IPostItem) => <PostItem postItem={postItem} key={postItem.id} />)
+          ? store.posts.map((postItem: IPostItem) => (
+              <PostItem catName={location.state} postItem={postItem} key={postItem.id} />
+            ))
           : null}
       </div>
     );

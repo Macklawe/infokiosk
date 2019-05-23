@@ -5,13 +5,15 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import withRoot from '../withRoot';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { Divider } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 
 import PrivateRouter from './privateRouter';
 import { Header, MainScreen, serverUrl, Connection } from './index';
 import { IStore } from '../store';
 import Posts from './MainScreen/Posts';
+import PostInfo from './MainScreen/PostInfo';
+import Notification from './Connection/notification';
+import Preview from './Connection/preview';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -31,12 +33,6 @@ class App extends React.Component<Props> {
       .then(data => {
         this.props.store.setPing(data.connectionServer);
       });
-
-    fetch(`${serverUrl}/ip/categories/active`)
-      .then(res => {
-        return res.json();
-      })
-      .then(data => this.props.store.setCategories(data));
   }
 
   render() {
@@ -44,13 +40,16 @@ class App extends React.Component<Props> {
 
     return (
       <>
-        <Route component={Header} />
         {!store.ping ? (
           <PrivateRouter path="/" component={Connection} />
         ) : (
           <>
+            <Route component={Header} {...this.props} />
+            <Route component={Notification} />
+            <Route component={Preview} />
             <PrivateRouter exact path="/" component={MainScreen} />
-            <PrivateRouter path="/category/:id" component={Posts} />
+            <PrivateRouter path="/category/:catid" component={Posts} />
+            <PrivateRouter path="/post/:postid" component={PostInfo} />
           </>
         )}
       </>

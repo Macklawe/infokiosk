@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom';
 import App from './components/app';
 import { Provider } from 'mobx-react';
 import { Router } from 'react-router';
-import createBrowserHistory from 'history/createBrowserHistory';
+import { createBrowserHistory } from 'history';
 import { store } from './store';
 
 const history = createBrowserHistory();

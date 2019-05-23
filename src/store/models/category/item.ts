@@ -1,10 +1,8 @@
 import { types } from 'mobx-state-tree';
 
-const children = types.model('children', {});
-
 export const CategoryItem = types.model('CategoryItem', {
-  block: types.frozen({}),
-  childrens: types.array(children),
+  block: types.frozen({ id: types.number, name: types.string }),
+  childrens: types.frozen([]),
   hasChildren: types.boolean,
   icon: types.string,
   id: types.number,

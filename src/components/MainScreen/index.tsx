@@ -7,6 +7,7 @@ import { inject, observer } from 'mobx-react';
 
 import Category from './Category';
 import { IStore } from '../../store';
+import { serverUrl } from '..';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -35,10 +36,28 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 class MainScreen extends React.Component<Props> {
+  constructor(props: any) {
+    super(props);
+
+    fetch(`${serverUrl}ip/categories/active`)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        let { store } = this.props;
+        store.setCategories(data);
+        store.preview.setImage(`${serverUrl}blocks/image/${data[0].block.id}`);
+        store.preview.firstTime ? (store.preview.show(), store.preview.toggleFirstTime()) : null;
+      })
+      .catch(error => {
+        console.log(error);
+        this.props.store.openNotification();
+      });
+  }
+
   render() {
     const { classes, store } = this.props;
     let filteredCat = store.category.filter(item => !item.isEmpty);
-    console.log(filteredCat);
     return (
       <div
         className={classNames(

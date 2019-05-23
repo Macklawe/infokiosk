@@ -59,7 +59,11 @@ interface Props extends WithStyles<typeof styles> {
 const Category: React.StatelessComponent<Props> = props => {
   const { classes, item } = props;
   return (
-    <Link to={`/category/${item.id}`} className={classes.container}>
+    <Link
+      to={{ pathname: `/category/${item.id}`, state: `${item.name}` }}
+      className={classes.container}
+      title={item.name}
+    >
       <img src={serverUrl + 'categories/image/' + item.icon} alt="" />
       <Typography variant="h3" className={classes.title}>
         {item.name}

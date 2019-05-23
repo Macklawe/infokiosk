@@ -12,21 +12,50 @@ import { IPostItem } from '../../store/models/posts/item';
 
 const styles = (theme: Theme) =>
   createStyles({
-    root: {}
+    root: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexDirection: 'column',
+      border: '1px solid rgba(220,190,152, 0.1)',
+      borderRadius: 4,
+      padding: 16
+    },
+    image: {
+      width: '90px'
+    },
+    title: {
+      color: '#fff',
+      fontSize: 30,
+      fontWeight: 400,
+      width: '80%',
+      marginTop: 24
+    },
+    subtitle: {
+      color: 'rgba(255,255,255, .6)',
+      fontSize: 20,
+      marginTop: 16
+    }
   });
 
 interface Props extends WithStyles<typeof styles> {
   postItem: IPostItem;
+  catName: string;
 }
 
 const PostItem: React.StatelessComponent<Props> = (props: Props) => {
-  const { classes, postItem } = props;
-  console.log(postItem, '123');
+  const { classes, postItem, catName } = props;
 
   return (
-    <div className={classes.root}>
-      <img src={serverUrl + '/records/image/' + postItem.titleImage.name} alt="" />
-    </div>
+    <Link to={{ pathname: `/post/${postItem.id}`, state: catName }} className={classes.root}>
+      <img className={classes.image} src={serverUrl + '/records/image/' + postItem.titleImage.name} alt="" />
+      <Typography className={classes.title} variant="h3" align="center">
+        {postItem.title}
+      </Typography>
+      <Typography className={classes.subtitle} variant="subtitle1" align="center">
+        {postItem.subtitle}
+      </Typography>
+    </Link>
   );
 };
 

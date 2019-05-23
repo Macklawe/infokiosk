@@ -149,8 +149,7 @@ const theme = createMuiTheme({
     },
     MuiDrawer: {
       paper: {
-        backgroundColor: variableColor.bodyBackground,
-        height: '100%'
+        overflow: 'hidden'
       },
       // docked: {
       //   minHeight: '100vh',
@@ -299,9 +298,24 @@ const theme = createMuiTheme({
     },
     MuiSnackbarContent: {
       root: {
-        '@media (min-width: 960px)': {
-          borderRadius: 0
-        }
+        borderRadius: '0 0 2px 2px !important',
+        backgroundColor: 'rgba(24,26,32, .8) !important',
+        width: '400px',
+        padding: '24px !important'
+      },
+      message: {
+        padding: '0px !important'
+      },
+      action: {
+        position: 'absolute',
+        top: 8,
+        right: 8
+      }
+    },
+
+    MuiIconButton: {
+      root: {
+        color: '#F0D1A8 !important'
       }
     },
     MuiToolbar: {
@@ -364,15 +378,16 @@ const theme = createMuiTheme({
 const decorate = withStyles({
   '@global': {
     body: {
-      background: 'linear-gradient(45deg, #181A20, #585D68);',
+      background: '#393d45',
       minHeight: '100vh',
       fontSize: 12,
       fontFamily: '"Open Sans", sans-serif',
       fontWeight: 400,
-      color: variableColor.text,
-
+      color: variableColor.text
+    },
+    '*': {
       '&::-webkit-scrollbar': {
-        width: '15px'
+        width: '8px'
       },
 
       '&::-webkit-scrollbar-track': {
@@ -381,6 +396,9 @@ const decorate = withStyles({
 
       '&::-webkit-scrollbar-thumb': {
         background: '#DCBE98'
+      },
+      '&:focus': {
+        outline: 'none !important'
       }
     },
     main: {
