@@ -4,11 +4,11 @@ import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { Typography } from '@material-ui/core';
-import { IStore, store } from '../../store';
 import { inject, observer } from 'mobx-react';
-import { serverUrl } from '..';
-
 import SwipeableViews from 'react-swipeable-views';
+
+import { serverUrl } from '..';
+import { IStore, store } from '../../store';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -51,7 +51,8 @@ const styles = (theme: Theme) =>
       objectFit: 'contain',
       marginTop: 32,
       padding: '0 32px',
-      transition: '0.6s all ease'
+      transition: '0.6s all ease',
+      touchAction: 'pan-x pan-y'
     },
     title: {
       color: '#fff',
@@ -108,7 +109,7 @@ const styles = (theme: Theme) =>
       alignItems: 'center',
       justifyContent: 'center',
       width: '100%',
-      height: '100%',
+      height: '70px',
       borderTop: '1px solid rgba(240,209,168,.2)'
     },
     dot: {
@@ -201,7 +202,8 @@ const styles = (theme: Theme) =>
       fontSize: 24,
       color: '#fff',
       lineHeight: '30px',
-      marginTop: 24
+      marginTop: 24,
+      padding: '0 24px'
     }
   });
 
@@ -349,9 +351,16 @@ class PostInfo extends React.Component<Props, State> {
                   {arrowRight}
                 </div>
                 <div className={classes.dotWrapper}>
-                  {store.postInfo.images.map((item: any, index: any) => {
+                  {store.postInfo.images.map((item: any, index: any, images: any) => {
                     return (
-                      <div key={index} className={classes.dotContainer} onClick={() => this.selectSlide(index)}>
+                      <div
+                        style={
+                          isOpen ? { display: 'flex' } : images.length <= 20 ? { display: 'flex' } : { display: 'none' }
+                        }
+                        key={index}
+                        className={classes.dotContainer}
+                        onClick={() => this.selectSlide(index)}
+                      >
                         <div
                           className={classNames(
                             classes.dot,

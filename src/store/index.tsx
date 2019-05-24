@@ -13,7 +13,8 @@ const Store = types
     postInfo: types.frozen({} as any),
     blockName: types.string,
     notification: types.boolean,
-    preview: Preview
+    preview: Preview,
+    time: types.optional(types.number, 0)
   })
   .actions(self => ({
     setPing: (ping: boolean) => {
@@ -42,6 +43,12 @@ const Store = types
     },
     openNotification: () => {
       self.notification = true;
+    },
+    clearTime: () => {
+      self.time = 0;
+    },
+    setTime: () => {
+      self.time = self.time + 1;
     }
   }));
 

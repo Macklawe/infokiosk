@@ -383,9 +383,11 @@ const decorate = withStyles({
       fontSize: 12,
       fontFamily: '"Open Sans", sans-serif',
       fontWeight: 400,
-      color: variableColor.text
+      color: variableColor.text,
+      touchAction: 'pan-x pan-y'
     },
     '*': {
+      userSelect: 'none',
       '&::-webkit-scrollbar': {
         width: '8px'
       },
