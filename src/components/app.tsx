@@ -64,7 +64,8 @@ class App extends React.Component<Props, State> {
     document.addEventListener('contextmenu', (e: any) => {
       e.stopPropagation(), e.preventDefault();
     });
-    fetch(`${serverUrl}/ping`)
+
+    fetch(`${serverUrl}ping`)
       .then(res => {
         return res.json();
       })

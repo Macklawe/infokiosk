@@ -12,13 +12,18 @@ import { serverUrl } from '..';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      padding: '44px 56px',
+      padding: '0 40px 0 56px',
       display: 'grid',
-      minHeight: 'calc(100vh - 84px)',
       gridAutoColumns: '1fr',
-      gridAutoRows: 'minmax(calc(50vh - 94px), 1fr)',
+      gridAutoRows: 'minmax(calc(50% - 8px), 1fr)',
       gridColumnGap: '16px',
-      gridRowGap: '16px'
+      gridRowGap: '16px',
+      height: 'calc(100vh - 184px)',
+      overflowY: 'auto',
+      margin: '44px 56px 0 0',
+      '@media screen and (max-width: 1919px)': {
+        gridAutoRows: '1fr'
+      }
     },
     grid2: {
       gridTemplateColumns: 'repeat(2, 1fr)'
@@ -39,6 +44,22 @@ class MainScreen extends React.Component<Props> {
   constructor(props: any) {
     super(props);
 
+    this.getCat();
+  }
+
+  interval: NodeJS.Timer | null | undefined = null;
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.getCat(), 10000);
+  }
+
+  componentWillUnmount() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
+  getCat = () => {
     fetch(`${serverUrl}ip/categories/active`)
       .then(res => {
         return res.json();
@@ -53,7 +74,7 @@ class MainScreen extends React.Component<Props> {
         console.log(error);
         this.props.store.openNotification();
       });
-  }
+  };
 
   render() {
     const { classes, store } = this.props;

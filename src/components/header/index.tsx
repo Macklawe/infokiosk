@@ -12,7 +12,7 @@ const styles = (theme: Theme) =>
   createStyles({
     root: {},
     header: {
-      padding: theme.spacing.unit * 3,
+      height: 96,
       background: 'rgba(24, 26, 32, 0.2)'
     },
     icon: {
@@ -41,7 +41,7 @@ class Buttons extends React.Component<Props> {
             <Typography
               align="left"
               variant="h2"
-              style={{ position: 'absolute', fontSize: '28px', cursor: 'pointer', lineHeight: '36px' }}
+              style={{ position: 'absolute', left: '38px', fontSize: '28px', cursor: 'pointer' }}
               onClick={() => history.goBack()}
             >
               <img className={classes.icon} src={require('../../images/ic_arrow_back.svg')} alt="" />
@@ -55,7 +55,7 @@ class Buttons extends React.Component<Props> {
           <Typography
             align="left"
             variant="h2"
-            style={{ fontSize: '28px', cursor: 'pointer' }}
+            style={{ fontSize: '28px', cursor: 'pointer', marginLeft: '38px' }}
             onClick={() => history.goBack()}
           >
             <img className={classes.icon} src={require('../../images/ic_arrow_back.svg')} alt="" />

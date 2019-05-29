@@ -6,6 +6,7 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { Typography } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import SwipeableViews from 'react-swipeable-views';
+import SimpleBar from 'simplebar-react';
 
 import { serverUrl } from '..';
 import { IStore, store } from '../../store';
@@ -13,37 +14,39 @@ import { IStore, store } from '../../store';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      height: 'calc(100vh - 84px)',
+      height: 'calc(100vh - 96px)',
       padding: '44px 56px',
       display: 'flex'
     },
     imageContainer: {
-      height: '100%',
+      height: 'calc(100vh - 184px)',
       width: '35vw',
       background: 'rgba(24,26,32, .2)',
       border: '1px solid rgba(240,209,168,.2)',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'space-between',
-      transition: '0.5s all ease'
+      transition: '0.5s all ease',
+      position: 'absolute',
+      zIndex: 2,
+      left: '56px'
     },
     imageContainerActive: {
       width: '100vw',
       height: '100vh',
-      margin: '-120px -104px 0 -56px',
+      margin: '-140px -104px 0 -56px',
       background: 'rgba(24,26,32, 1)',
       border: 'none'
     },
     infoContainer: {
-      height: '100%',
+      height: 'calc(100vh - 184px)',
       width: 'calc(65vw - 160px)',
       marginLeft: 48,
       overflow: 'hidden',
-      transition: '0.3s all ease'
-    },
-    infoContainerDisabled: {
-      width: 0,
-      paddingRight: 0
+      transition: '0.3s all ease',
+      position: 'absolute',
+      right: '56px',
+      zIndex: 1
     },
     image: {
       width: '100%',
@@ -57,7 +60,8 @@ const styles = (theme: Theme) =>
     title: {
       color: '#fff',
       fontSize: 36,
-      marginBottom: 16
+      marginBottom: 16,
+      lineHeight: '1'
     },
     subTitle: {
       color: 'rgba(255,255,255, .6)',
@@ -69,12 +73,15 @@ const styles = (theme: Theme) =>
       border: '1px solid rgba(240,209,168,.2)',
       borderBottom: 'none',
       borderLeft: 'none',
-      width: '152px',
-      padding: 16,
+      minWidth: '152px',
+      padding: '0 32px',
       height: 70,
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      '@media screen and (max-width: 1600px)': {
+        minWidth: 120
+      }
     },
     arrowLeft: {
       width: 24,
@@ -100,9 +107,11 @@ const styles = (theme: Theme) =>
       alignItems: 'center'
     },
     dotContainer: {
+      margin: '0 4px',
       height: '100%',
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      maxWidth: 16
     },
     dotWrapper: {
       display: 'flex',
@@ -110,14 +119,14 @@ const styles = (theme: Theme) =>
       justifyContent: 'center',
       width: '100%',
       height: '70px',
-      borderTop: '1px solid rgba(240,209,168,.2)'
+      borderTop: '1px solid rgba(240,209,168,.2)',
+      overflow: 'hidden'
     },
     dot: {
-      width: 16,
+      width: '100%',
       height: 2,
       background: '#636976',
-      display: 'inline-block',
-      margin: '0 4px'
+      display: 'inline-block'
     },
     dotActive: { background: '#f0d1a8' },
     iconWrapper: {
@@ -169,8 +178,8 @@ const styles = (theme: Theme) =>
       fontSize: 24,
       lineHeight: '30px',
       color: '#fff',
-      overflowY: 'scroll',
       height: '100%',
+      overflowY: 'scroll',
       paddingRight: 16
     },
     textContainer: {
@@ -234,7 +243,40 @@ class PostInfo extends React.Component<Props, State> {
     };
 
     const postId = this.props.match.params.postid;
-    fetch(`${serverUrl}/ip/records/${postId}`)
+    this.getPostInfo(postId);
+  }
+
+  interval: NodeJS.Timer | null | undefined = null;
+
+  componentDidMount() {
+    const postId = this.props.match.params.postid;
+    this.interval = setInterval(() => this.getPostInfo(postId), 10000);
+  }
+
+  componentDidUpdate() {
+    function resize(title: any, text: any) {
+      let height = title.current.offsetHeight;
+      let container = text.current.parentElement;
+      container.setAttribute('style', `height: calc(100% - ${height}px - 40px)`);
+    }
+
+    if (this.state.update) {
+      resize(this.text, this.soap);
+      this.setState({ update: false });
+    }
+    this.soap.current ? this.soap.current.addEventListener('scroll', () => this.handlerScroll(), true) : null;
+  }
+
+  componentWillUnmount() {
+    store.clearPostInfo();
+    this.soap.current ? this.soap.current.removeEventListener('scroll', () => this.handlerScroll(), true) : null;
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
+  getPostInfo = (postId: number) => {
+    fetch(`${serverUrl}ip/records/${postId}`)
       .then(res => {
         return res.json();
       })
@@ -243,7 +285,7 @@ class PostInfo extends React.Component<Props, State> {
         console.log(error);
         this.props.store.openNotification();
       });
-  }
+  };
 
   next = () => {
     if (this.state.slideIndex !== store.postInfo.images.length - 1) {
@@ -277,25 +319,6 @@ class PostInfo extends React.Component<Props, State> {
     return { __html: store.postInfo.text };
   };
 
-  componentDidUpdate() {
-    function resize(title: any, text: any) {
-      let height = title.current.offsetHeight;
-      let container = text.current.parentElement;
-      container.setAttribute('style', `height: calc(100% - ${height}px - 40px)`);
-    }
-
-    if (this.state.update) {
-      resize(this.text, this.soap);
-      this.setState({ update: false });
-    }
-    this.soap.current.addEventListener('scroll', () => this.handlerScroll(), true);
-  }
-
-  componentWillUnmount() {
-    store.clearPostInfo();
-    this.soap.current.removeEventListener('scroll', () => this.handlerScroll(), true);
-  }
-
   handlerScroll = () => {
     const height = this.soap.current.offsetHeight;
     let scrollOffset = this.soap.current.scrollTop;
@@ -312,10 +335,24 @@ class PostInfo extends React.Component<Props, State> {
 
   render() {
     const { classes, store } = this.props;
-    const { isOpen } = this.state;
+    const { isOpen, slideIndex } = this.state;
 
-    let arrowLeft: any = <div className={classes.arrowLeft} onClick={this.previous} />;
-    let arrowRight: any = <div className={classes.arrowRight} onClick={this.next} />;
+    let arrowLeft: any = (
+      <div
+        style={slideIndex === 0 ? { borderColor: '#505560' } : {}}
+        className={classes.arrowLeft}
+        onClick={this.previous}
+      />
+    );
+    let arrowRight: any = (
+      <div
+        style={
+          slideIndex === (store.postInfo.images && store.postInfo.images.length - 1) ? { borderColor: '#505560' } : {}
+        }
+        className={classes.arrowRight}
+        onClick={this.next}
+      />
+    );
 
     return (
       <div className={classes.root}>
@@ -326,6 +363,7 @@ class PostInfo extends React.Component<Props, State> {
                 enableMouseEvents
                 index={this.state.slideIndex}
                 onChangeIndex={(index: number) => this.setState({ slideIndex: index })}
+                style={{ overflowY: 'hidden' }}
               >
                 {store.postInfo && store.postInfo.images.length !== 0
                   ? store.postInfo.images.map((image: any, index: any) => {
@@ -354,10 +392,8 @@ class PostInfo extends React.Component<Props, State> {
                   {store.postInfo.images.map((item: any, index: any, images: any) => {
                     return (
                       <div
-                        style={
-                          isOpen ? { display: 'flex' } : images.length <= 20 ? { display: 'flex' } : { display: 'none' }
-                        }
                         key={index}
+                        style={{ width: `calc(100% / ${images.length})` }}
                         className={classes.dotContainer}
                         onClick={() => this.selectSlide(index)}
                       >
@@ -399,7 +435,7 @@ class PostInfo extends React.Component<Props, State> {
                 </div>
               </div>
             </div>
-            <div className={classNames(classes.infoContainer, isOpen ? classes.infoContainerDisabled : null)}>
+            <div className={classes.infoContainer}>
               <div ref={this.text}>
                 <Typography className={classes.title} variant="h2">
                   {store.postInfo.title}

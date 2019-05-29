@@ -6,7 +6,6 @@ import Drawer from '@material-ui/core/Drawer';
 
 import { inject, observer } from 'mobx-react';
 import { IStore } from '../../store';
-import { serverUrl } from '..';
 import { Typography } from '@material-ui/core';
 
 const styles = (theme: Theme) =>
@@ -17,14 +16,20 @@ const styles = (theme: Theme) =>
     },
     image: {
       width: '100vw',
-      height: '100vh'
+      height: '100vh',
+      objectFit: 'cover'
     },
     title: {
       position: 'absolute',
-      top: '50%',
+      top: '40%',
       left: '50%',
       transform: 'translate3d(-50%, -50%, 0)',
-      color: '#F0D1A8'
+      color: '#F0D1A8',
+      textAlign: 'center',
+      fontSize: '150px',
+      width: '90%',
+      fontFamily: '"Elizabeth Unicode", sans-serif',
+      lineHeight: 0.7
     }
   });
 

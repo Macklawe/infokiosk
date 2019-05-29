@@ -46,8 +46,6 @@ interface Props extends WithStyles<typeof styles> {
 const PostItem: React.StatelessComponent<Props> = (props: Props) => {
   const { classes, postItem, catName } = props;
 
-  console.log('123');
-
   return (
     <Link to={{ pathname: `/post/${postItem.id}`, state: catName }} className={classes.root}>
       <img className={classes.image} src={serverUrl + '/records/image/' + postItem.titleImage.name} alt="" />

@@ -26,7 +26,8 @@ const Store = types
       (self.blockName as any) = categories[0].block.name;
     },
     setPosts(posts: Array<IPostItem>) {
-      self.posts.push(...posts);
+      let arr: any = posts;
+      self.posts = arr;
     },
     clearPosts: () => {
       let newArray: any = [];

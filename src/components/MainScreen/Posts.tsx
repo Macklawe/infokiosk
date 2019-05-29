@@ -14,14 +14,22 @@ import PostItem from './PostItem';
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      padding: '44px 56px',
+      padding: '0 40px 0 56px',
       display: 'grid',
-      minHeight: 'calc(100vh - 84px)',
       gridAutoColumns: '1fr',
-      gridAutoRows: 'minmax(calc(50vh - 94px), 1fr)',
+      gridAutoRows: 'minmax(calc(50% - 8px), 1fr)',
       gridColumnGap: '16px',
       gridRowGap: '16px',
-      gridTemplateColumns: '1fr 1fr 1fr'
+      gridTemplateColumns: '1fr 1fr 1fr',
+      height: 'calc(100vh - 184px)',
+      overflowY: 'auto',
+      margin: '44px 56px 0 0',
+      '@media screen and (max-width: 1919px)': {
+        gridAutoRows: '1fr'
+      },
+      '@media screen and (max-width: 1600px)': {
+        gridTemplateColumns: '1fr 1fr'
+      }
     }
   });
 
@@ -36,7 +44,25 @@ class Posts extends React.Component<Props> {
     super(props);
 
     const catID = this.props.match.params.catid;
-    fetch(`${serverUrl}/ip/categories/${catID}/records`)
+    this.getPost(catID);
+  }
+
+  interval: NodeJS.Timer | null | undefined = null;
+
+  componentDidMount() {
+    const catID = this.props.match.params.catid;
+    this.interval = setInterval(() => this.getPost(catID), 10000);
+  }
+
+  componentWillUnmount() {
+    this.props.store.clearPosts();
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
+  getPost = (ID: number) => {
+    fetch(`${serverUrl}ip/categories/${ID}/records`)
       .then(res => {
         return res.json();
       })
@@ -45,11 +71,7 @@ class Posts extends React.Component<Props> {
         console.log(error);
         this.props.store.openNotification();
       });
-  }
-
-  componentWillUnmount() {
-    this.props.store.clearPosts();
-  }
+  };
 
   render() {
     const { classes, store, location } = this.props;

@@ -1,5 +1,5 @@
 {
-  "name": "create-react-app-with-typescript",
+  "name": "infokiosk-web",
   "version": "3.2.2",
   "private": true,
   "main": "src/index.tsx",
@@ -15,6 +15,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/react-swipeable-views": "^0.13.0",
     "classnames": "^2.2.6",
+    "cross-env": "^5.2.0",
     "mobx": "^5.8.0",
     "mobx-devtools-mst": "^0.9.21",
     "mobx-react": "^5.4.3",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "*",
     "@types/node": "*",
+    "concurrently": "^4.1.0",
     "typescript": "latest"
   },
   "scripts": {

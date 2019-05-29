@@ -28,6 +28,7 @@ interface Props extends WithStyles<typeof styles> {
 
 const Notification: React.StatelessComponent<Props> = props => {
   const { classes, store } = props;
+  let date: number = new Date().getTime();
   return (
     <Snackbar
       anchorOrigin={{
@@ -37,6 +38,7 @@ const Notification: React.StatelessComponent<Props> = props => {
       open={store.notification}
       autoHideDuration={6000}
       onClose={store.closeNotification}
+      key={date}
       message={
         <>
           <p className={classes.title}>Нет соединения с сервером</p>
@@ -44,7 +46,7 @@ const Notification: React.StatelessComponent<Props> = props => {
         </>
       }
       action={[
-        <IconButton className={classes.close} onClick={store.closeNotification}>
+        <IconButton key={1} className={classes.close} onClick={store.closeNotification}>
           <CloseIcon />
         </IconButton>
       ]}

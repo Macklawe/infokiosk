@@ -54,7 +54,8 @@ const theme = createMuiTheme({
       h2: {
         fontSize: 36,
         fontWeight: 400,
-        color: variableColor.white
+        color: variableColor.white,
+        lineHeight: '96px'
       }
     },
     MuiDialogContent: {
@@ -384,9 +385,12 @@ const decorate = withStyles({
       fontFamily: '"Open Sans", sans-serif',
       fontWeight: 400,
       color: variableColor.text,
-      touchAction: 'pan-x pan-y'
+      touchAction: 'pan-x pan-y',
+      overflow: 'hidden'
     },
     '*': {
+      scrollbarColor: '#DCBE98 rgba(172,182,204,0.2)',
+      scrollbarWidth: 'thin',
       userSelect: 'none',
       '&::-webkit-scrollbar': {
         width: '8px'
@@ -397,7 +401,8 @@ const decorate = withStyles({
       },
 
       '&::-webkit-scrollbar-thumb': {
-        background: '#DCBE98'
+        background: '#DCBE98',
+        borderRadius: '8px'
       },
       '&:focus': {
         outline: 'none !important'
