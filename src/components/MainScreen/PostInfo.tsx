@@ -6,7 +6,6 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import { Typography } from '@material-ui/core';
 import { inject, observer } from 'mobx-react';
 import SwipeableViews from 'react-swipeable-views';
-import SimpleBar from 'simplebar-react';
 
 import { serverUrl } from '..';
 import { IStore, store } from '../../store';
